@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Mirror — Natural Look | Android App</title>
+  <meta name="description" content="The most beautiful mirror app for Android. Natural look, premium silver effects, ad-free for $5 lifetime."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{--gold:#C0A062;--gold-dark:#B8962E;--bg:#080808;--text:#fff}
+    body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+
+    /* ── HERO ── */
+    .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 24px;position:relative;overflow:hidden}
+    .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(192,160,98,.08) 0%,transparent 65%)}
+    .mirror-emoji{font-size:80px;margin-bottom:24px;filter:drop-shadow(0 0 40px rgba(192,160,98,.35));animation:float 4s ease-in-out infinite}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+    .brand{font-family:'Cormorant Garamond',serif;color:var(--gold);font-size:13px;letter-spacing:8px;font-weight:300;margin-bottom:6px}
+    h1{font-family:'Cormorant Garamond',serif;font-size:clamp(42px,8vw,80px);font-weight:600;line-height:1.1;margin-bottom:20px;background:linear-gradient(135deg,#fff 0%,#d0d0d0 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .subtitle{font-size:clamp(15px,2.5vw,19px);color:rgba(255,255,255,.5);max-width:520px;line-height:1.7;margin-bottom:40px}
+    .divider{width:50px;height:1px;background:rgba(192,160,98,.4);margin:0 auto 40px}
+
+    /* ── CTA ── */
+    .cta-group{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:60px}
+    .btn-primary{background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:#0a0a0a;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;padding:16px 32px;border-radius:50px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .25s;box-shadow:0 0 0 0 rgba(192,160,98,.5);animation:pulse 2.5s infinite}
+    @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(192,160,98,.5)}60%{box-shadow:0 0 0 14px rgba(192,160,98,0)}}
+    .btn-primary:hover{transform:translateY(-2px);opacity:.9}
+    .btn-secondary{background:rgba(255,255,255,.05);color:rgba(255,255,255,.7);font-family:'DM Sans',sans-serif;font-size:14px;padding:16px 32px;border-radius:50px;text-decoration:none;border:1px solid rgba(255,255,255,.12);transition:all .25s}
+    .btn-secondary:hover{background:rgba(255,255,255,.09)}
+
+    /* ── PHONE MOCKUP ── */
+    .phone-wrap{position:relative;margin:0 auto 80px;width:220px}
+    .phone{width:220px;height:460px;background:#0c0c0c;border-radius:36px;border:1px solid rgba(255,255,255,.08);box-shadow:0 40px 100px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.05),inset 0 1px 0 rgba(255,255,255,.06);overflow:hidden;position:relative}
+    .phone-screen{position:absolute;inset:4px;border-radius:32px;background:radial-gradient(ellipse at 38% 32%,#1e1e1e,#040404);overflow:hidden}
+    .phone-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:80px;height:20px;background:#0a0a0a;border-radius:0 0 12px 12px;z-index:10}
+    .mirror-lines span{position:absolute;left:4%;right:4%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.025),rgba(255,255,255,.04),rgba(255,255,255,.025),transparent)}
+    .phone-ui{position:absolute;bottom:16px;left:0;right:0;display:flex;justify-content:center;gap:5px;z-index:5}
+    .zoom-dot{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:rgba(255,255,255,.6)}
+    .zoom-dot.active{background:rgba(192,160,98,.85);color:#0a0a0a}
+    .phone-silhouette{position:absolute;top:50%;left:50%;transform:translate(-50%,-48%);opacity:.09;display:flex;flex-direction:column;align-items:center}
+    .sil-head{width:62px;height:76px;border-radius:50% 50% 44% 44%;background:rgba(255,255,255,.9)}
+    .sil-neck{width:14px;height:18px;background:rgba(255,255,255,.9)}
+    .sil-body{width:120px;height:50px;border-radius:40% 40% 0 0;background:rgba(255,255,255,.9)}
+    .phone-vignette{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 44%,transparent 36%,rgba(0,0,0,.5) 100%)}
+    .phone-tint{position:absolute;inset:0;background:linear-gradient(145deg,rgba(200,200,220,.07),rgba(180,180,200,.04),rgba(210,210,230,.06));mix-blend-mode:screen}
+    .phone-glow{position:absolute;inset:0;box-shadow:inset 0 0 50px rgba(180,180,220,.15)}
+    .phone-border-top{position:absolute;top:0;left:0;right:0;height:8px;background:linear-gradient(to bottom,rgba(255,255,255,.22),transparent)}
+    .phone-highlight{position:absolute;top:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),rgba(255,255,255,.6),rgba(255,255,255,.45),transparent)}
+    .home-bar{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);width:56px;height:3px;border-radius:3px;background:rgba(255,255,255,.18)}
+
+    /* ── FEATURES ── */
+    .features{padding:80px 24px;max-width:1100px;margin:0 auto}
+    .section-label{text-align:center;font-family:'Cormorant Garamond',serif;color:var(--gold);font-size:11px;letter-spacing:6px;margin-bottom:14px}
+    .section-title{text-align:center;font-family:'Cormorant Garamond',serif;font-size:clamp(30px,5vw,48px);font-weight:600;margin-bottom:60px}
+    .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+    .feature-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:28px;transition:all .3s}
+    .feature-card:hover{background:rgba(192,160,98,.05);border-color:rgba(192,160,98,.2);transform:translateY(-4px)}
+    .feature-icon{font-size:32px;margin-bottom:16px}
+    .feature-title{font-size:16px;font-weight:600;margin-bottom:8px}
+    .feature-desc{color:rgba(255,255,255,.45);font-size:13px;line-height:1.7}
+
+    /* ── PRICING ── */
+    .pricing{padding:80px 24px;text-align:center}
+    .price-card{max-width:400px;margin:0 auto;background:linear-gradient(145deg,rgba(192,160,98,.1),rgba(192,160,98,.03));border:1px solid rgba(192,160,98,.3);border-radius:24px;padding:40px 32px}
+    .price-badge{display:inline-block;background:rgba(192,160,98,.15);border:1px solid rgba(192,160,98,.3);border-radius:50px;padding:5px 16px;font-size:10px;color:var(--gold);letter-spacing:2px;margin-bottom:20px}
+    .price-amount{font-family:'Cormorant Garamond',serif;font-size:72px;color:var(--gold);font-weight:600;line-height:1}
+    .price-desc{color:rgba(255,255,255,.35);font-size:11px;margin-bottom:28px}
+    .price-features{list-style:none;margin-bottom:32px;text-align:left}
+    .price-features li{color:rgba(255,255,255,.6);font-size:13px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);display:flex;gap:12px}
+    .price-features li::before{content:"✦";color:var(--gold);flex-shrink:0}
+    .btn-gold{display:block;background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:#0a0a0a;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;padding:18px;border-radius:14px;text-decoration:none;transition:all .2s}
+    .btn-gold:hover{opacity:.88;transform:translateY(-2px)}
+
+    /* ── FOOTER ── */
+    footer{border-top:1px solid rgba(255,255,255,.06);padding:40px 24px;text-align:center}
+    .footer-brand{font-family:'Cormorant Garamond',serif;color:var(--gold);font-size:20px;margin-bottom:12px}
+    .footer-links{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
+    .footer-links a{color:rgba(255,255,255,.3);text-decoration:none;font-size:12px;transition:color .2s}
+    .footer-links a:hover{color:var(--gold)}
+    .footer-copy{color:rgba(255,255,255,.15);font-size:11px}
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="mirror-emoji">🪞</div>
+  <div class="brand">MIRROR — NATURAL LOOK</div>
+  <div class="divider"></div>
+  <h1>Your most beautiful<br/>reflection</h1>
+  <p class="subtitle">A premium Android mirror app. Full-screen front camera with silver tint, edge glow and frosted glass effects — no filters, just you.</p>
+  <div class="cta-group">
+    <a href="https://play.google.com/store/apps/details?id=com.mirrornaturallook" class="btn-primary">
+      ▶&nbsp; Get it on Google Play
+    </a>
+    <a href="#features" class="btn-secondary">See features →</a>
+  </div>
+
+  <!-- Phone mockup -->
+  <div class="phone-wrap">
+    <div class="phone">
+      <div class="phone-screen">
+        <div class="phone-notch"></div>
+        <div class="mirror-lines">
+          <span style="top:8%"></span><span style="top:17%"></span><span style="top:26%"></span>
+          <span style="top:35%"></span><span style="top:44%"></span><span style="top:53%"></span>
+          <span style="top:62%"></span><span style="top:71%"></span><span style="top:80%"></span>
+        </div>
+        <div class="phone-silhouette">
+          <div class="sil-head"></div>
+          <div class="sil-neck"></div>
+          <div class="sil-body"></div>
+        </div>
+        <div class="phone-vignette"></div>
+        <div class="phone-tint"></div>
+        <div class="phone-glow"></div>
+        <div class="phone-border-top"></div>
+        <div class="phone-highlight"></div>
+        <div class="phone-ui">
+          <div class="zoom-dot active">1×</div>
+          <div class="zoom-dot">1.5×</div>
+          <div class="zoom-dot">2×</div>
+          <div class="zoom-dot">2.5×</div>
+          <div class="zoom-dot">3×</div>
+        </div>
+        <div class="home-bar"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="section-label">FEATURES</div>
+  <h2 class="section-title">Everything a mirror should be</h2>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🪞</div>
+      <div class="feature-title">True Natural Mirror</div>
+      <div class="feature-desc">Full-screen front camera with horizontal flip. No filters, no beautification — just your real reflection.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">✦</div>
+      <div class="feature-title">Silver Tint Effect</div>
+      <div class="feature-desc">Metallic silver sheen layered over your reflection. Makes your screen feel like polished silver glass.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">◎</div>
+      <div class="feature-title">Edge Glow</div>
+      <div class="feature-desc">Soft luminous halo radiates around the screen edges — like light bouncing off a real mirror frame.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">❄</div>
+      <div class="feature-title">Frosted Glass Border</div>
+      <div class="feature-desc">Elegant frosted edges with a polished top highlight — the finishing touch of a premium mirror.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔍</div>
+      <div class="feature-title">Pinch to Zoom</div>
+      <div class="feature-desc">Smooth pinch gesture or tap 1× – 3× zoom buttons. Perfect for close-up detail.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">↻</div>
+      <div class="feature-title">Auto Rotate</div>
+      <div class="feature-desc">Portrait or landscape — the mirror fills your screen perfectly in any orientation.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">☽</div>
+      <div class="feature-title">Dark & Silver Themes</div>
+      <div class="feature-desc">Switch between a deep dark background and a bright silver background to match any setting.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💎</div>
+      <div class="feature-title">30-Day Free Trial</div>
+      <div class="feature-desc">Try the full experience free for 30 days. Then unlock lifetime ad-free access for just $5 — once, forever.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="section-label">PRICING</div>
+  <h2 class="section-title" style="margin-bottom:40px">Simple, honest pricing</h2>
+  <div class="price-card">
+    <div class="price-badge">LIFETIME PREMIUM</div>
+    <div class="price-amount">$5</div>
+    <div class="price-desc">One-time payment · No subscription ever</div>
+    <ul class="price-features">
+      <li>Zero ads, forever</li>
+      <li>Dark &amp; Silver mirror themes</li>
+      <li>All three mirror effects</li>
+      <li>Full-screen natural view</li>
+      <li>Restores on any device</li>
+    </ul>
+    <a href="https://play.google.com/store/apps/details?id=com.mirrornaturallook" class="btn-gold">
+      Get it on Google Play  →
+    </a>
+    <p style="color:rgba(255,255,255,.2);font-size:10px;margin-top:16px">Secure payment via Google Play · 30-day free trial included</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">🪞 Mirror</div>
+  <div class="footer-links">
+    <a href="/privacy">Privacy Policy</a>
+    <a href="/terms">Terms of Use</a>
+    <a href="mailto:support@mirrornaturallook.com">Support</a>
+    <a href="https://play.google.com/store/apps/details?id=com.mirrornaturallook">Google Play</a>
+  </div>
+  <div class="footer-copy">© 2025 Mirror Natural Look. All rights reserved.</div>
+</footer>
+
+</body>
+</html>
