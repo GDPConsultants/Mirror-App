@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Main app theme -->
+    <style name="Theme.MirrorNaturalLook" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/gold</item>
+        <item name="colorPrimaryVariant">@color/gold_dark</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorSurface">@color/mirror_dark_bg</item>
+        <item name="android:windowBackground">@color/black</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="o_mr1">shortEdges</item>
+    </style>
+
+    <!-- Mirror screen: truly full-screen, no status bar -->
+    <style name="Theme.Mirror" parent="Theme.MirrorNaturalLook">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/black</item>
+        <item name="android:fitsSystemWindows">false</item>
+    </style>
+
+    <!-- Paywall -->
+    <style name="Theme.Paywall" parent="Theme.MirrorNaturalLook">
+        <item name="android:windowBackground">@color/mirror_dark_bg</item>
+        <item name="android:statusBarColor">@color/mirror_dark_bg</item>
+    </style>
+
+    <!-- Instant splash (no white flash) -->
+    <style name="Theme.Splash" parent="Theme.MirrorNaturalLook">
+        <item name="android:windowBackground">@color/black</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <!-- Zoom button style -->
+    <style name="ZoomButton" parent="Widget.Material3.Button">
+        <item name="android:layout_width">38dp</item>
+        <item name="android:layout_height">38dp</item>
+        <item name="android:textSize">9sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:backgroundTint">@color/zoom_inactive_bg</item>
+        <item name="android:paddingHorizontal">0dp</item>
+        <item name="cornerRadius">19dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:layout_marginHorizontal">3dp</item>
+    </style>
+
+</resources>

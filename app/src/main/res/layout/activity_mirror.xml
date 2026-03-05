@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mirrorContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
+
+    <!-- Mirror background (dark or silver theme) -->
+    <View
+        android:id="@+id/mirrorBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_mirror_dark"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!-- Live camera preview — fills entire screen -->
+    <androidx.camera.view.PreviewView
+        android:id="@+id/viewFinder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:scaleType="fillCenter" />
+
+    <!-- Vignette overlay -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/vignette_overlay"
+        android:importantForAccessibility="no"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!-- Camera permission denied layout -->
+    <LinearLayout
+        android:id="@+id/cameraPermissionLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone"
+        android:padding="32dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:text="📷"
+            android:textSize="48sp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:text="Camera Access Required"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:text="Mirror needs camera permission to show your reflection.\n\nGo to Settings → Apps → Mirror Natural Look → Permissions → Camera → Allow"
+            android:textColor="#99FFFFFF"
+            android:textSize="13sp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp" />
+
+        <Button
+            android:id="@+id/btnAllowCamera"
+            android:text="Allow Camera"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:paddingHorizontal="28dp"
+            android:backgroundTint="#C0A062"
+            android:textColor="#0A0A0A"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <!-- ── CONTROLS OVERLAY (auto-hides) ── -->
+    <LinearLayout
+        android:id="@+id/controlsOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- Top bar: theme toggle + upgrade -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="48dp"
+            android:paddingBottom="12dp"
+            android:background="@drawable/gradient_top_fade">
+
+            <!-- Theme toggle -->
+            <Button
+                android:id="@+id/btnTheme"
+                android:text="☽  Dark"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:paddingHorizontal="16dp"
+                android:textSize="11sp"
+                android:textColor="#CCFFFFFF"
+                android:backgroundTint="#22FFFFFF"
+                android:strokeColor="#33FFFFFF"
+                style="@style/Widget.Material3.Button.OutlinedButton" />
+
+            <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1" />
+
+            <!-- Upgrade badge -->
+            <Button
+                android:id="@+id/btnUpgrade"
+                android:text="28d free · $5"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:paddingHorizontal="16dp"
+                android:textSize="11sp"
+                android:textColor="#0A0A0A"
+                android:textStyle="bold"
+                android:backgroundTint="#C0A062"
+                style="@style/Widget.Material3.Button" />
+
+        </LinearLayout>
+
+        <!-- Spacer — fills middle so zoom bar sits at bottom -->
+        <View android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" />
+
+        <!-- Zoom badge (shown when zoomed) -->
+        <TextView
+            android:id="@+id/zoomBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="1.0×"
+            android:textColor="#BBFFFFFF"
+            android:textSize="12sp"
+            android:background="@drawable/badge_bg"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="4dp"
+            android:visibility="gone"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Zoom bar -->
+        <LinearLayout
+            android:id="@+id/zoomBar"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="14dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_zoom_bar_dark"
+            android:spacing="6dp">
+
+            <Button android:id="@+id/zoom1x"
+                style="@style/ZoomButton"
+                android:text="1×" android:selected="true" />
+
+            <Button android:id="@+id/zoom15x"
+                style="@style/ZoomButton"
+                android:text="1.5×" />
+
+            <Button android:id="@+id/zoom2x"
+                style="@style/ZoomButton"
+                android:text="2×" />
+
+            <Button android:id="@+id/zoom25x"
+                style="@style/ZoomButton"
+                android:text="2.5×" />
+
+            <Button android:id="@+id/zoom3x"
+                style="@style/ZoomButton"
+                android:text="3×" />
+        </LinearLayout>
+
+        <!-- Watch Ad button (free users) -->
+        <Button
+            android:id="@+id/btnWatchAd"
+            android:text="Watch ad → 1hr no ads"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_gravity="center_horizontal"
+            android:paddingHorizontal="18dp"
+            android:textSize="11sp"
+            android:textColor="#AAFFFFFF"
+            android:backgroundTint="#1AFFFFFF"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone"
+            style="@style/Widget.Material3.Button.OutlinedButton" />
+
+        <!-- AdMob Banner -->
+        <FrameLayout
+            android:id="@+id/adBannerContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:visibility="gone"
+            android:background="#CC000000"
+            android:paddingBottom="8dp" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
